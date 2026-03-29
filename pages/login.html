@@ -17,18 +17,22 @@
 					<img src="/assets/logo.webp" alt="Logo da Loja" class="logo-img" onerror="this.style.display='none'" />
 				</div>
 			</div>
-			<div class="second-column">
-				<h2 class="title title-second">Login</h2>
-				<form class="form" id="loginForm">
-					<label class="label-input">
-						<i class="far fa-envelope icon-modify"></i>
-						<input type="email" id="loginEmail" placeholder="E-mail" required autocomplete="username">
-					</label>
-					<label class="label-input">
-						<i class="fas fa-lock icon-modify"></i>
-						<input type="password" id="loginPassword" placeholder="Senha" required autocomplete="current-password">
-					</label>
-					<button type="submit" class="btn btn-second">Entrar</button>
+			<div class="login-box-simple">
+				<span class="logo logo-simple">nomeLoja</span>
+				<h2 class="login-title">Bem-vindo(a) de volta</h2>
+				<p class="login-desc">Continue colocando os dados da sua conta.</p>
+				<form class="login-form-simple" id="loginForm">
+					<label for="loginEmail" class="login-label">E-mail</label>
+					<div class="input-wrapper">
+						<i class="fa-regular fa-envelope"></i>
+						<input type="email" id="loginEmail" class="login-input" placeholder="seuemail@email.com" required autocomplete="username">
+					</div>
+					<label for="loginPassword" class="login-label">Senha</label>
+					<div class="input-wrapper">
+						<i class="fa-solid fa-lock"></i>
+						<input type="password" id="loginPassword" class="login-input" placeholder="************" required autocomplete="current-password">
+					</div>
+					<button type="submit" class="login-btn">Entrar na plataforma</button>
 				</form>
 			</div>
 		</div>

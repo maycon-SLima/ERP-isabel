@@ -6,6 +6,11 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
@@ -23,6 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 export async function login(email, password) {
   try {
@@ -51,4 +57,19 @@ export async function getCurrentUser() {
       resolve(user);
     });
   });
+}
+
+// Função para buscar os dados extras do usuário no Firestore
+export async function getUserData(uid) {
+  try {
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    }
+    return null;
+  } catch (error) {
+    console.error("Erro ao buscar dados no Firestore:", error);
+    return null;
+  }
 }
