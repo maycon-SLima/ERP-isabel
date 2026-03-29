@@ -1,38 +1,47 @@
-// Firebase Auth integração
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDlH77gs7jvd9MPyuze32LZTDfHbqy9FIk",
-  authDomain: "ung-frameworks.firebaseapp.com",
-  projectId: "ung-frameworks",
-  storageBucket: "ung-frameworks.firebasestorage.app",
-  messagingSenderId: "88240724756",
-  appId: "1:88240724756:web:890779401a93a01187c001",
-  measurementId: "G-9Z9YJKM2PS"
+  apiKey: "AIzaSyAe7RBDeRGDlMliJxp9R-fevM69Ut03VSY",
+  authDomain: "ung-projetos.firebaseapp.com",
+  projectId: "ung-projetos",
+  storageBucket: "ung-projetos.firebasestorage.app",
+  messagingSenderId: "11804262226",
+  appId: "1:11804262226:web:c4be34b2f651186550048b",
+  measurementId: "G-LBCQQ399YE"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
-export async function signup(email, password, name) {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    if (name) {
-      await updateProfile(userCredential.user, { displayName: name });
-    }
-    return { success: true, user: userCredential.user };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-}
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
 
 export async function login(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return { success: true, user: userCredential.user };
   } catch (error) {
-    return { success: false, error: error.message };
+    let errorMessage = "Ocorreu um erro inesperado. Por favor, tente novamente.";
+
+    // O Firebase (v9+) usa 'auth/invalid-credential' tanto para senha errada
+    // quanto para usuário não encontrado, para evitar enumeração de contas.
+    switch (error.code) {
+      case 'auth/invalid-credential':
+        errorMessage = "E-mail ou senha inválidos. Verifique seus dados e tente novamente.";
+        break;
+      case 'auth/invalid-email':
+        errorMessage = "O formato do e-mail fornecido é inválido.";
+        break;
+    }
+    return { success: false, error: errorMessage };
   }
 }
 
