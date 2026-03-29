@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link rel="stylesheet" href="../style/styles.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap">
+</head>
+<body>
+	<div class="container">
+		<div class="content first-content">
+			<div class="first-column">
+				<h2 class="title title-primary">Bem-vindo!</h2>
+				<p class="description description-primary">Para acessar o sistema, faça login com seu usuário e senha.</p>
+			</div>
+			<div class="second-column">
+				<h2 class="title title-second">Login</h2>
+				<form class="form" id="loginForm">
+					<label class="label-input">
+						<i class="far fa-user icon-modify"></i>
+						<input type="text" id="loginUser" placeholder="Usuário" required autocomplete="username">
+					</label>
+					<label class="label-input">
+						<i class="fas fa-lock icon-modify"></i>
+						<input type="password" id="loginPassword" placeholder="Senha" required autocomplete="current-password">
+					</label>
+					<button type="submit" class="btn btn-second">Entrar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="https://kit.fontawesome.com/4e8b8e8e8e.js" crossorigin="anonymous"></script>
+	<script src="../js/main.js"></script>
+</body>
+</html>
