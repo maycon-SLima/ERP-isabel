@@ -1,10 +1,14 @@
 import { checkAuth } from './protected.js';
-import { getUserData, db } from './auth.js'; // Importa 'db' do auth.js
+import { getUserData, db, logout } from './auth.js'; // Importa 'db' e 'logout' do auth.js
 import { collection, addDoc, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 async function initializePontoPage() {
     const user = await checkAuth();
     if (!user) return;
+
+    // Exibe o conteúdo apenas após confirmar autenticação
+    const appContainer = document.getElementById('app-container');
+    if (appContainer) appContainer.style.display = 'flex';
 
     // --- Pega as informações do usuário (copiado do dashboard.js) ---
     const userData = await getUserData(user.uid);
@@ -308,6 +312,35 @@ async function initializePontoPage() {
     // Arruma a tela pela primeira vez quando a página carrega
     await loadPontoRecords(); // Carrega os pontos antes de atualizar a UI
     updateUI(); 
+
+    // Lógica do Dropdown do Usuário
+    const userInfoToggle = document.getElementById('userInfoToggle');
+    const userDropdown = document.getElementById('userDropdown');
+    
+    if (userInfoToggle && userDropdown) {
+        userInfoToggle.addEventListener('click', function(e) {
+            e.stopPropagation(); 
+            userDropdown.classList.toggle('show');
+            userInfoToggle.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!userInfoToggle.contains(e.target)) {
+                userDropdown.classList.remove('show');
+                userInfoToggle.classList.remove('active');
+            }
+        });
+    }
+
+    // Configuração do botão de Logout do Dropdown
+    const dropdownLogoutBtn = document.getElementById('dropdownLogoutBtn');
+    if (dropdownLogoutBtn) {
+        dropdownLogoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await logout();
+            window.location.replace('login.html');
+        });
+    }
 }
 
 // Chama a função principal pra começar tudo quando a página carregar

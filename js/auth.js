@@ -4,7 +4,8 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebas
 import {
   getAuth,
   signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   getFirestore,
@@ -48,6 +49,17 @@ export async function login(email, password) {
         break;
     }
     return { success: false, error: errorMessage };
+  }
+}
+
+// Função para deslogar do sistema
+export async function logout() {
+  try {
+    await signOut(auth);
+    return { success: true };
+  } catch (error) {
+    console.error("Erro ao fazer logout:", error);
+    return { success: false, error };
   }
 }
 

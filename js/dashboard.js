@@ -1,5 +1,5 @@
 import { checkAuth } from './protected.js';
-import { getUserData } from './auth.js';
+import { getUserData, logout } from './auth.js';
 
 const user = await checkAuth();
 
@@ -84,3 +84,32 @@ submenuArrows.forEach(function(link) {
 		parent.classList.toggle('open');
 	});
 });
+
+// Lógica do Dropdown do Usuário
+const userInfoToggle = document.getElementById('userInfoToggle');
+const userDropdown = document.getElementById('userDropdown');
+
+if (userInfoToggle && userDropdown) {
+    userInfoToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        userDropdown.classList.toggle('show');
+        userInfoToggle.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!userInfoToggle.contains(e.target)) {
+            userDropdown.classList.remove('show');
+            userInfoToggle.classList.remove('active');
+        }
+    });
+}
+
+// Lógica de Logout
+const dropdownLogoutBtn = document.getElementById('dropdownLogoutBtn');
+if (dropdownLogoutBtn) {
+    dropdownLogoutBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await logout();
+        window.location.replace('login.html');
+    });
+}

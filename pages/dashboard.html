@@ -37,14 +37,21 @@
 				<div class="breadcrumb">Dashboard - Início</div>
 			</div>
 			<div class="topbar-actions">
-				<button class="btn-topbar"><i class="fas fa-cog"></i></button>
-				<div class="user-info">
+			<!--<button class="btn-topbar"><i class="fas fa-cog"></i></button> acho que fica melhor na nav-bar-->
+				<div class="user-info" id="userInfoToggle">
 					<span class="user-avatar">...</span>
 					<div class="user-details">
 						<span class="user-name" id="userName">Carregando...</span>
 						<span class="user-email" id="userEmail">carregando...</span>
 					</div>
 					<i class="fas fa-chevron-down"></i>
+					<!-- User Dropdown Menu -->
+					<div class="user-dropdown" id="userDropdown">
+						<ul>
+							<li><a href="#"><i class="fas fa-user"></i> Perfil</a></li>
+							<li><a href="#" id="dropdownLogoutBtn" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</header>
