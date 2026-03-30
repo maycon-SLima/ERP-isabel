@@ -1,52 +1,14 @@
 import { checkAuth } from './protected.js';
-import { getUserData, db, logout } from './auth.js'; // Importa 'db' e 'logout' do auth.js
+import { db } from './auth.js';
+import { setupSharedUI } from './ui.js';
 import { collection, addDoc, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 async function initializePontoPage() {
     const user = await checkAuth();
     if (!user) return;
 
-    // Exibe o conteúdo apenas após confirmar autenticação
-    const appContainer = document.getElementById('app-container');
-    if (appContainer) appContainer.style.display = 'flex';
-
-    // --- Pega as informações do usuário (copiado do dashboard.js) ---
-    const userData = await getUserData(user.uid);
-    let displayName = user.email.split('@')[0];
-    let storeName = "nomeLoja";
-
-    if (userData) {
-        if (userData.nomeReal) displayName = userData.nomeReal;
-        if (userData.nomeLoja) storeName = userData.nomeLoja;
-        if (userData.cargo) sessionStorage.setItem('userRole', userData.cargo);
-    }
-
-    if (document.getElementById('userName'))
-        document.getElementById('userName').textContent = displayName;
-    if (document.getElementById('userEmail'))
-        document.getElementById('userEmail').textContent = user.email;
-
-    const storeNameElement = document.querySelector('.sidebar-store-name');
-    if (storeNameElement) storeNameElement.textContent = storeName;
-
-    // --- Pega as iniciais para o Avatar (copiado do dashboard.js) ---
-    const nameParts = displayName.trim().split(/\s+/);
-    let initials = nameParts[0][0].toUpperCase();
-    if (nameParts.length > 1) {
-        initials += nameParts[nameParts.length - 1][0].toUpperCase();
-    } else if (nameParts[0].length > 1) {
-        initials += nameParts[0][1].toUpperCase();
-    }
-    document.querySelectorAll('.user-avatar').forEach(avatar => avatar.textContent = initials);
-
-    // --- Lógica da barra lateral (copiado do dashboard.js) ---
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    if (sidebarToggle) {
-        sidebarToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('sidebar-collapsed');
-        });
-    }
+    // Inicializa a interface padrão compartilhada
+    await setupSharedUI(user);
 
     // --- Lógica específica da página de Ponto ---
     const timeElement = document.getElementById('current-time');
@@ -312,35 +274,6 @@ async function initializePontoPage() {
     // Arruma a tela pela primeira vez quando a página carrega
     await loadPontoRecords(); // Carrega os pontos antes de atualizar a UI
     updateUI(); 
-
-    // Lógica do Dropdown do Usuário
-    const userInfoToggle = document.getElementById('userInfoToggle');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userInfoToggle && userDropdown) {
-        userInfoToggle.addEventListener('click', function(e) {
-            e.stopPropagation(); 
-            userDropdown.classList.toggle('show');
-            userInfoToggle.classList.toggle('active');
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!userInfoToggle.contains(e.target)) {
-                userDropdown.classList.remove('show');
-                userInfoToggle.classList.remove('active');
-            }
-        });
-    }
-
-    // Configuração do botão de Logout do Dropdown
-    const dropdownLogoutBtn = document.getElementById('dropdownLogoutBtn');
-    if (dropdownLogoutBtn) {
-        dropdownLogoutBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await logout();
-            window.location.replace('login.html');
-        });
-    }
 }
 
 // Chama a função principal pra começar tudo quando a página carregar

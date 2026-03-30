@@ -8,6 +8,7 @@
 /* SIDEBAR */
 .sidebar {
     width: 240px;
+    flex-shrink: 0;
     background: #181818;
     display: flex;
     flex-direction: column;
@@ -114,6 +115,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 /* TOPBAR */
