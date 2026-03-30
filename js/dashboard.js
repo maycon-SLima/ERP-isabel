@@ -104,6 +104,72 @@ if (userInfoToggle && userDropdown) {
     });
 }
 
+// Gráfico de Evolução do Saldo (Linha)
+const ctxBalance = document.getElementById('balanceChart');
+if (ctxBalance) {
+    new Chart(ctxBalance, {
+        type: 'line',
+        data: {
+            labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26', 'Mar/26'],
+            datasets: [{
+                label: 'Saldo (R$)',
+                data: [12000, 15000, 18000, 22000, 26000, 30000, 34500],
+                borderColor: '#4facfe',
+                backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4 // Deixa a linha curvada
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#333' },
+                    ticks: { color: '#bdbdbd' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#bdbdbd' }
+                }
+            }
+        }
+    });
+}
+
+// Gráfico de Composição das Despesas (Doughnut)
+const ctxExpenses = document.getElementById('expensesChart');
+if (ctxExpenses) {
+    new Chart(ctxExpenses, {
+        type: 'doughnut',
+        data: {
+            labels: ['Folha de Pagamento', 'Infraestrutura/Software', 'Marketing', 'Materiais'],
+            datasets: [{
+                data: [12000, 5000, 6000, 2000],
+                backgroundColor: ['#ff6b6b', '#f7b731', '#4facfe', '#a55eea'],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: { color: '#bdbdbd', padding: 20 }
+                }
+            },
+            cutout: '70%' // Deixa o buraco no meio maior
+        }
+    });
+}
+
 // Lógica de Logout
 const dropdownLogoutBtn = document.getElementById('dropdownLogoutBtn');
 if (dropdownLogoutBtn) {
@@ -111,5 +177,40 @@ if (dropdownLogoutBtn) {
         e.preventDefault();
         await logout();
         window.location.replace('login.html');
+    });
+}
+
+// Gráfico de Receita (Chart.js)
+const ctx = document.getElementById('revenueChart');
+if (ctx) {
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26', 'Mar/26'],
+            datasets: [{
+                label: 'Receita (R$)',
+                data: [28000, 35000, 42000, 48000, 55000, 62000, 70000],
+                backgroundColor: '#58af9b',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#333' },
+                    ticks: { color: '#bdbdbd' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#bdbdbd' }
+                }
+            }
+        }
     });
 }

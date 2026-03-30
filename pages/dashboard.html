@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="../css/styles.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="dashboard-container">
@@ -73,19 +74,19 @@
 			<div class="dashboard-cards">
 				<div class="card card-balance">
 					<div class="card-label">Saldo Total da Sua Empresa</div>
-					<div class="card-value">R$ 124.254,62 <span class="card-up">↑ 8.2%</span></div>
+					<div class="card-value">R$ 34.500,00 <span class="card-up">↑ 8.2%</span></div>
 				</div>
 				<div class="card card-income">
 					<div class="card-label">Receita Total</div>
-					<div class="card-value">R$ 265.172,00</div>
+					<div class="card-value">R$ 70.000,00</div>
 				</div>
 				<div class="card card-expense">
 					<div class="card-label">Despesa Total</div>
-					<div class="card-value">R$ 98.284,00</div>
+					<div class="card-value">R$ 25.000,00</div>
 				</div>
 				<div class="card card-tax">
 					<div class="card-label">Impostos Totais</div>
-					<div class="card-value">R$ 46.174,00</div>
+					<div class="card-value">R$ 10.500,00</div>
 				</div>
 			</div>
 
@@ -96,20 +97,45 @@
 						<span>Receita Mensal</span>
 						<span class="graph-rate">Taxa 2.0% <span class="graph-down">↓ 6%</span></span>
 					</div>
-					<div class="graph-value">Receita Total R$ 23.456,00 <span class="graph-up">↑ 2%</span></div>
-					<div class="graph-placeholder">[Gráfico de barras aqui]</div>
+					<div class="graph-value">Receita Total R$ 70.000,00 <span class="graph-up">↑ 2%</span></div>
+					<div style="position: relative; height: 180px; width: 100%; margin-top: auto;">
+						<canvas id="revenueChart"></canvas>
+					</div>
 				</div>
 				<div class="graph-card">
 					<div class="graph-header">
 						<span>Segmentação de Clientes</span>
 					</div>
-					<div class="graph-segment-total">Total <span class="segment-number">2,758</span></div>
+					<div class="graph-segment-total">Total <span class="segment-number">185</span></div>
 					<ul class="segment-list">
-						<li><span class="segment-color small-business"></span> Pequenas Empresas <span class="segment-value">1650</span></li>
-						<li><span class="segment-color enterprise"></span> Grandes Empresas <span class="segment-value">350</span></li>
-						<li><span class="segment-color individuals"></span> Pessoas Físicas <span class="segment-value">458</span></li>
+						<li><span class="segment-color small-business"></span> Pequenas Empresas <span class="segment-value">120</span></li>
+						<li><span class="segment-color enterprise"></span> Grandes Empresas <span class="segment-value">15</span></li>
+						<li><span class="segment-color individuals"></span> Pessoas Físicas <span class="segment-value">50</span></li>
 					</ul>
 					<button class="btn-segment-details">Mais detalhes</button>
+				</div>
+			</div>
+
+			<!-- Segunda linha de Gráficos -->
+			<div class="dashboard-graphs" style="margin-top: 18px;">
+				<div class="graph-card">
+					<div class="graph-header">
+						<span>Evolução do Saldo Total</span>
+						<span class="graph-rate">Taxa 4.5% <span class="graph-up">↑ 8%</span></span>
+					</div>
+					<div class="graph-value">Saldo Atual R$ 34.500,00</div>
+					<div style="position: relative; height: 180px; width: 100%; margin-top: auto;">
+						<canvas id="balanceChart"></canvas>
+					</div>
+				</div>
+				<div class="graph-card">
+					<div class="graph-header">
+						<span>Composição das Despesas</span>
+						<span class="graph-rate">R$ 25.000,00</span>
+					</div>
+					<div style="position: relative; height: 200px; width: 100%; display: flex; justify-content: center; align-items: center;">
+						<canvas id="expensesChart"></canvas>
+					</div>
 				</div>
 			</div>
 		</section>
