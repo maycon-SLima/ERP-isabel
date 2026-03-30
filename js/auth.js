@@ -73,3 +73,5 @@ export async function getUserData(uid) {
     return null;
   }
 }
+
+export { db };

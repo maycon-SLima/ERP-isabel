@@ -1,5 +1,6 @@
 import { checkAuth } from './protected.js';
-import { getUserData } from './auth.js';
+import { getUserData, db } from './auth.js'; // Importa 'db' do auth.js
+import { collection, addDoc, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 async function initializePontoPage() {
     const user = await checkAuth();
@@ -57,9 +58,13 @@ async function initializePontoPage() {
     const summaryExit = document.getElementById('summary-exit');
     const summaryTotalHours = document.getElementById('summary-total-hours');
 
-    // Onde vamos guardar as batidas de ponto. Por enquanto, fica só na memória do navegador.
-    // Num app de verdade, isso viria de um banco de dados pra não perder quando recarregar a página.
-    let pontoRecords = [];
+    // Elementos do Modal Customizado
+    const modalOverlay = document.getElementById('custom-modal-overlay');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMessage = document.getElementById('modal-message');
+    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+    const modalCancelBtn = document.getElementById('modal-cancel-btn');
+
 
     // Função que atualiza o relógio
     function updateClock() {
@@ -77,45 +82,130 @@ async function initializePontoPage() {
     setInterval(updateClock, 1000);
     updateClock();
 
+    // Onde vamos guardar as batidas de ponto.
+    // Agora, vamos carregar do Firestore e depois adicionar novas.
+    let pontoRecords = [];
+
+    // Função para carregar os pontos do dia do Firestore
+    async function loadPontoRecords() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Início do dia atual
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1); // Início do próximo dia
+
+        const q = query(
+            collection(db, "punchRecords"),
+            where("userId", "==", user.uid),
+            where("timestamp", ">=", today),
+            where("timestamp", "<", tomorrow),
+            orderBy("timestamp", "asc") // Garante a ordem correta
+        );
+        const querySnapshot = await getDocs(q);
+        pontoRecords = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            return { type: data.type, time: data.timestamp.toDate(), source: data.source }; // Converte Timestamp para Date
+        });
+    }
+
     // --- A Mágica do Ponto Acontece Aqui ---
 
     if (clockInOutBtn) {
         clockInOutBtn.addEventListener('click', handleClockIn);
     }
 
-    function handleClockIn() {
+    // Função para mostrar um pop-up de confirmação
+    function showCustomConfirm(title, message) {
+        return new Promise((resolve) => {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+
+            modalConfirmBtn.style.display = 'inline-block';
+            modalCancelBtn.style.display = 'inline-block';
+            modalConfirmBtn.textContent = 'Confirmar';
+
+            modalOverlay.classList.add('show');
+
+            const confirmHandler = () => {
+                cleanup();
+                resolve(true);
+            };
+
+            const cancelHandler = () => {
+                cleanup();
+                resolve(false);
+            };
+
+            const cleanup = () => {
+                modalOverlay.classList.remove('show');
+                modalConfirmBtn.removeEventListener('click', confirmHandler);
+                modalCancelBtn.removeEventListener('click', cancelHandler);
+            };
+
+            modalConfirmBtn.addEventListener('click', confirmHandler);
+            modalCancelBtn.addEventListener('click', cancelHandler);
+        });
+    }
+
+    // Função para mostrar um pop-up de alerta simples
+    function showCustomAlert(title, message) {
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+
+        modalConfirmBtn.style.display = 'inline-block';
+        modalCancelBtn.style.display = 'none';
+        modalConfirmBtn.textContent = 'OK';
+
+        modalOverlay.classList.add('show');
+
+        const okHandler = () => {
+            modalOverlay.classList.remove('show');
+            modalConfirmBtn.removeEventListener('click', okHandler);
+        };
+
+        modalConfirmBtn.addEventListener('click', okHandler);
+    }
+
+    async function handleClockIn() {
+        // Desabilita o botão imediatamente para evitar cliques duplos
+        clockInOutBtn.disabled = true;
+
         const punchTypes = ['Entrada', 'Saída Almoço', 'Volta Almoço', 'Saída'];
         const currentPunchIndex = pontoRecords.length;
 
         if (currentPunchIndex >= punchTypes.length) {
+            clockInOutBtn.disabled = false; // Reabilita se não houver ação
             return; // Se já fez as 4 batidas, não faz mais nada
         }
 
         const punchType = punchTypes[currentPunchIndex];
 
-        // 1. Adiciona um pop-up de confirmação antes de registrar
-        const confirmationMessage = `Você confirma o registro de "${punchType}"?`;
-        if (!confirm(confirmationMessage)) {
+        // 1. Usa o pop-up customizado para confirmação
+        const isConfirmed = await showCustomConfirm('Confirmação de Ponto', `Você confirma o registro de "${punchType}"?`);
+
+        if (!isConfirmed) {
+            clockInOutBtn.disabled = false; // Reabilita se o usuário cancelar
             return; // Se o usuário clicar em "Cancelar", a função para aqui.
         }
 
         const now = new Date();
 
-        // 2. Tratativa para não permitir duas marcações no mesmo horário (segundo)
+        // 2. Tratativa para não permitir marcações em um intervalo menor que 5 minutos
         if (pontoRecords.length > 0) {
             const lastRecord = pontoRecords[pontoRecords.length - 1];
-            if (Math.floor(lastRecord.time.getTime() / 1000) === Math.floor(now.getTime() / 1000)) {
-                alert('Você não pode fazer duas marcações no mesmo segundo. Por favor, aguarde um instante e tente novamente.');
-                return; // Impede o registro do ponto duplicado.
+            const fiveMinutesInMillis = 5 * 60 * 1000;
+            if ((now.getTime() - lastRecord.time.getTime()) < fiveMinutesInMillis) {
+                showCustomAlert('Intervalo Mínimo', 'Você deve aguardar pelo menos 5 minutos entre cada marcação.');
+                clockInOutBtn.disabled = false; // Reabilita após o erro
+                return; // Impede o registro do ponto.
             }
         }
-
         const newRecord = {
             type: punchType,
             time: now,
             source: 'Web'
         };
 
+        await addDoc(collection(db, "punchRecords"), { ...newRecord, userId: user.uid, timestamp: now }); // Salva no Firestore
         pontoRecords.push(newRecord);
         updateUI();
     }
@@ -160,6 +250,12 @@ async function initializePontoPage() {
 
     function updateButtonAndStatus() {
         const punchCount = pontoRecords.length;
+
+        // Reseta o estado do botão para os casos normais
+        clockInOutBtn.disabled = false;
+        clockInOutBtn.style.cursor = 'pointer';
+        clockInOutBtn.style.backgroundColor = '';
+
         switch (punchCount) {
             case 0:
                 pontoStatus.textContent = 'Você ainda não bateu o ponto hoje.';
@@ -210,7 +306,8 @@ async function initializePontoPage() {
     }
 
     // Arruma a tela pela primeira vez quando a página carrega
-    updateUI();
+    await loadPontoRecords(); // Carrega os pontos antes de atualizar a UI
+    updateUI(); 
 }
 
 // Chama a função principal pra começar tudo quando a página carregar
