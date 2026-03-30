@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Marcação de Ponto</title>
+	<link rel="stylesheet" href="../css/styles.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="dashboard-container">
+	<!-- Sidebar -->
+	<aside class="sidebar sidebar-collapsed" id="sidebar">
+		<div class="sidebar-logo">
+			<button id="sidebarToggle" class="sidebar-toggle-btn"><i class="fas fa-angles-right"></i></button>
+			<span class="sidebar-store-name">nomeLoja</span>
+		</div>
+		<nav class="sidebar-nav">
+			<ul>
+				<li><a href="dashboard.html"><i class="fas fa-home"></i><span class="nav-text">Início</span></a></li>
+				<li><a href="ponto.html" class="active"><i class="fas fa-clock"></i><span class="nav-text">Marcação de Ponto</span></a></li>
+                <li><a href="#"><i class="fas fa-box"></i><span class="nav-text">Estoque</span></a></li>
+                <li><a href="#"><i class="fas fa-cart-shopping"></i><span class="nav-text">Vendas</span></a></li>
+				<li><a href="#"><i class="fas fa-chart-bar"></i><span class="nav-text">Relatórios</span></a></li>
+				<li><a href="#"><i class="fas fa-cog"></i><span class="nav-text">Configurações</span></a></li>
+			</ul>
+		</nav>
+	</aside>
+
+	<!-- Main Content -->
+	<main class="main-content">
+		<!-- Topbar -->
+		<header class="topbar">
+			<div style="display: flex; align-items: center; gap: 16px;">
+				
+				<div class="breadcrumb">Marcação de Ponto</div>
+			</div>
+			<div class="topbar-actions">
+				<button class="btn-topbar"><i class="fas fa-cog"></i></button>
+				<div class="user-info">
+					<span class="user-avatar">...</span>
+					<div class="user-details">
+						<span class="user-name" id="userName">Carregando...</span>
+						<span class="user-email" id="userEmail">carregando...</span>
+					</div>
+					<i class="fas fa-chevron-down"></i>
+				</div>
+			</div>
+		</header>
+
+		<!-- ponto content -->
+		<section class="ponto-content">
+			<div class="ponto-header">
+				<div class="ponto-title">
+					<h2>Registro de Ponto</h2>
+					<p>Acompanhe suas horas trabalhadas e faça suas marcações.</p>
+				</div>
+				<div class="ponto-actions">
+					<button class="btn-ponto-report">Exportar Relatório</button>
+				</div>
+			</div>
+
+			<div class="ponto-main">
+				<div class="ponto-clock-card">
+					<h3>Relógio de Ponto</h3>
+					<div id="current-time" class="clock-time">--:--:--</div>
+					<div id="current-date" class="clock-date">-- de ----- de ----</div>
+					<button id="clock-in-out-btn" class="btn-ponto-action">Bater Ponto</button>
+					<p id="ponto-status" class="ponto-status-message">Você ainda não bateu o ponto hoje.</p>
+				</div>
+
+				<div class="ponto-summary-card">
+					<h3>Resumo do Dia</h3>
+					<div class="summary-item">
+						<span>Entrada:</span>
+						<span id="summary-entry">--:--</span>
+					</div>
+					<div class="summary-item">
+						<span>Saída Almoço:</span>
+						<span id="summary-lunch-start">--:--</span>
+					</div>
+					<div class="summary-item">
+						<span>Volta Almoço:</span>
+						<span id="summary-lunch-end">--:--</span>
+					</div>
+					<div class="summary-item">
+						<span>Saída:</span>
+						<span id="summary-exit">--:--</span>
+					</div>
+					<hr>
+					<div class="summary-total">
+						<span>Horas Trabalhadas Hoje:</span>
+						<span id="summary-total-hours">0h 00m</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="ponto-history-card">
+				<h3>Histórico de Marcações do Dia</h3>
+				<table class="history-table">
+					<thead>
+						<tr>
+							<th>Tipo</th>
+							<th>Horário</th>
+							<th>Fonte</th>
+						</tr>
+					</thead>
+					<tbody id="history-table-body">
+						<tr>
+							<td colspan="3" style="text-align: center;">Nenhuma marcação encontrada para hoje.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+</div>
+<script type="module" src="../js/ponto.js"></script>
+</body>
+</html>

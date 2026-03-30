@@ -30,8 +30,8 @@ if (document.getElementById('userGreeting')) {
 
 // Lógica de saudação baseada no horário atual
 let currentHour = new Date().getHours();
-currentHour = 3; // TESTE: Descomente esta linha e mude o número para testar (0 a 23)
-let greetingText = "Boa tarde";
+//currentHour = 3; // TESTE: Descomente esta linha e mude o número para testar (0 a 23)
+let greetingText = "-";
 
 if (currentHour >= 6 && currentHour < 12) {
 	greetingText = "Bom dia";

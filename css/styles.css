@@ -852,3 +852,245 @@ input:-webkit-autofill
         width: 40%;
     }
 }
+
+/* PONTO PAGE STYLES */
+.ponto-content {
+    padding: 0 36px 36px 36px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.ponto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.ponto-title h2 {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.ponto-title p {
+    color: #bdbdbd;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.btn-ponto-report {
+    background: #58af9b;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-ponto-report:hover {
+    background: #4a9b88;
+}
+
+.ponto-main {
+    display: flex;
+    gap: 24px;
+}
+
+.ponto-clock-card, .ponto-summary-card, .ponto-history-card {
+    background: #181818;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.ponto-clock-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.ponto-clock-card h3, .ponto-summary-card h3, .ponto-history-card h3 {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    width: 100%;
+    text-align: left;
+}
+
+.clock-time {
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.clock-date {
+    font-size: 1.1rem;
+    color: #bdbdbd;
+    margin-top: -10px;
+}
+
+.btn-ponto-action {
+    background: #58af9b;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.2s;
+}
+
+.btn-ponto-action:hover {
+    background: #4a9b88;
+}
+
+.ponto-status-message {
+    color: #bdbdbd;
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+.ponto-summary-card {
+    flex: 1.2;
+}
+
+.summary-item, .summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #bdbdbd;
+    padding: 10px 0;
+}
+
+.summary-item span:last-child, .summary-total span:last-child {
+    color: #fff;
+    font-weight: 600;
+}
+
+.ponto-summary-card hr {
+    border: none;
+    border-top: 1px solid #232323;
+    margin: 8px 0;
+}
+
+.ponto-history-card {
+    margin-top: 0;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #bdbdbd;
+}
+
+.history-table th, .history-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #232323;
+}
+
+.history-table th {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600;
+}
+
+.history-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* CUSTOM MODAL STYLES */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-container {
+    background: #232323;
+    padding: 24px 32px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 400px;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.show .modal-container {
+    transform: scale(1);
+}
+
+.modal-header h3 {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.modal-body p {
+    color: #bdbdbd;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-modal {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-modal-primary {
+    background: #58af9b;
+    color: #fff;
+}
+.btn-modal-primary:hover { background: #4a9b88; }
+
+.btn-modal-secondary {
+    background: #3a3a3a;
+    color: #fff;
+}
+.btn-modal-secondary:hover { background: #4f4f4f; }
