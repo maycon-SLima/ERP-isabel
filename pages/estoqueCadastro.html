@@ -3,14 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Cadastrar Produto</title>
+	<title>Estoque - Cadastrar Produto</title>
 	<link rel="stylesheet" href="../css/styles.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 <div class="dashboard-container">
-	<!-- Sidebar -->
+	<!-- sidebar -->
 	<aside class="sidebar sidebar-collapsed" id="sidebar">
 		<div class="sidebar-logo">
 			<button id="sidebarToggle" class="sidebar-toggle-btn"><i class="fas fa-angles-right"></i></button>
@@ -29,9 +29,9 @@
 		</nav>
 	</aside>
 
-	<!-- Main Content -->
+	<!-- main content -->
 	<main class="main-content">
-		<!-- Topbar -->
+		<!-- topbar -->
 		<header class="topbar">
 			<div style="display: flex; align-items: center; gap: 16px;">
 				<div class="breadcrumb">Estoque - Cadastro de Produto</div>
@@ -54,7 +54,7 @@
 			</div>
 		</header>
 
-		<!-- Cadastro Content -->
+		<!-- cadastro content -->
 		<section class="cadastro-content">
 			<div class="form-page-header">
 				<h2>Adicionar Novo Produto</h2>
@@ -101,10 +101,23 @@
 			</div>
 		</section>
 
-		<!-- Modal de Confirmação Genérico (usado pelo ui.js) -->
-		<div id="custom-modal-overlay" class="modal-overlay"></div>
+		<!-- modal de confirmacao generico usado pelo ui js -->
+		<div id="custom-modal-overlay" class="modal-overlay">
+			<div class="modal-container">
+				<div class="modal-header">
+					<h3 id="modal-title"></h3>
+				</div>
+				<div class="modal-body">
+					<p id="modal-message"></p>
+				</div>
+				<div class="modal-footer">
+					<button id="modal-cancel-btn" class="btn-modal btn-modal-secondary">Cancelar</button>
+					<button id="modal-confirm-btn" class="btn-modal btn-modal-primary">Confirmar</button>
+				</div>
+			</div>
+		</div>
 	</main>
 </div>
-<script type="module" src="../js/cadastro-item.js"></script>
+<script type="module" src="../js/estoqueCadastro.js"></script>
 </body>
 </html>

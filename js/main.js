@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', function() {
             errorDiv.style.display = 'block';
             return;
         }
-        // Simulação de login
+        // simulacao de login
         if (user === 'admin' && pass === '1234') {
             errorDiv.style.display = 'none';
             alert('Login realizado com sucesso!');
-            // Redirecionar ou carregar sistema
+            // redirecionar ou carregar sistema
         } else {
             errorDiv.textContent = 'Usuário ou senha inválidos.';
             errorDiv.style.display = 'block';

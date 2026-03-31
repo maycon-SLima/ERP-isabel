@@ -38,8 +38,8 @@ export async function login(email, password) {
   } catch (error) {
     let errorMessage = "Ocorreu um erro inesperado. Por favor, tente novamente.";
 
-    // O Firebase (v9+) usa 'auth/invalid-credential' tanto para senha errada
-    // quanto para usuário não encontrado, para evitar enumeração de contas.
+    // o firebase v9 usa auth invalid credential tanto para senha errada
+    // quanto para usuario nao encontrado para evitar enumeracao de contas
     switch (error.code) {
       case 'auth/invalid-credential':
         errorMessage = "E-mail ou senha inválidos. Verifique seus dados e tente novamente.";
@@ -52,7 +52,7 @@ export async function login(email, password) {
   }
 }
 
-// Função para deslogar do sistema
+// funcao para deslogar do sistema
 export async function logout() {
   try {
     await signOut(auth);
@@ -71,7 +71,7 @@ export async function getCurrentUser() {
   });
 }
 
-// Função para buscar os dados extras do usuário no Firestore
+// funcao para buscar os dados extras do usuario no firestore
 export async function getUserData(uid) {
   try {
     const docRef = doc(db, "users", uid);

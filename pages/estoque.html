@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="dashboard-container">
-	<!-- Sidebar -->
+	<!-- sidebar -->
 	<aside class="sidebar sidebar-collapsed" id="sidebar">
 		<div class="sidebar-logo">
 			<button id="sidebarToggle" class="sidebar-toggle-btn"><i class="fas fa-angles-right"></i></button>
@@ -29,16 +29,16 @@
 		</nav>
 	</aside>
 
-	<!-- Main Content -->
+	<!-- main content -->
 	<main class="main-content">
-		<!-- Topbar -->
+		<!-- topbar -->
 		<header class="topbar">
 			<div style="display: flex; align-items: center; gap: 16px;">
 				
 				<div class="breadcrumb">Estoque - Início</div>
 			</div>
 			<div class="topbar-actions">
-			<!--<button class="btn-topbar"><i class="fas fa-cog"></i></button> acho que fica melhor na nav-bar-->
+			<!-- button class btn topbar i class fas fa cog i button acho que fica melhor na nav bar -->
 				<div class="user-info" id="userInfoToggle">
 					<span class="user-avatar">...</span>
 					<div class="user-details">
@@ -46,7 +46,7 @@
 						<span class="user-email" id="userEmail">carregando...</span>
 					</div>
 					<i class="fas fa-chevron-down"></i>
-					<!-- User Dropdown Menu -->
+					<!-- user dropdown menu -->
 					<div class="user-dropdown" id="userDropdown">
 						<ul>
 							<li><a href="#"><i class="fas fa-user"></i> Perfil</a></li>
@@ -57,7 +57,7 @@
 			</div>
 		</header>
 
-		<!-- estoque Content -->
+		<!-- estoque content -->
 		<section class="estoque-content">
 			<div class="estoque-header">
 				<div class="estoque-title">
@@ -65,16 +65,40 @@
 					<p>Controle seus produtos, categorias e quantidades.</p>
 				</div>
 				<div class="estoque-actions">
-					<a href="cadastro-item.html" class="btn-estoque-action"><i class="fas fa-plus"></i> Novo Produto</a>
+					<a href="estoqueCadastro.html" class="btn-estoque-action"><i class="fas fa-plus"></i> Novo Produto</a>
 				</div>
 			</div>
 
 			<div class="estoque-filters">
 				<div class="search-box">
 					<i class="fas fa-search"></i>
-					<input type="text" placeholder="Buscar produtos...">
+					<input type="text" id="search-input" placeholder="Buscar por Produto ou Código...">
 				</div>
-				<button class="btn-filter"><i class="fas fa-filter"></i> Filtrar</button>
+				<button id="btn-filter-toggle" class="btn-filter"><i class="fas fa-filter"></i> Filtrar</button>
+			</div>
+
+			<!-- painel de filtros avancados -->
+			<div id="advanced-filters" class="advanced-filters" style="display: none;">
+				<div class="form-group">
+					<label for="filter-category" class="form-label">Categoria</label>
+					<select id="filter-category" class="form-input">
+						<option value="">Todas as categorias</option>
+						<option value="Calças">Calças</option>
+						<option value="Blusas">Blusas</option>
+						<option value="Vestidos">Vestidos</option>
+						<option value="Casacos">Casacos</option>
+						<option value="Acessórios">Acessórios</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="filter-status" class="form-label">Status do Estoque</label>
+					<select id="filter-status" class="form-input">
+						<option value="">Todos os status</option>
+						<option value="in-stock">Em Estoque (> 10 itens)</option>
+						<option value="low-stock">Baixo Estoque (1 a 10 itens)</option>
+						<option value="out-of-stock">Sem Estoque (0 itens)</option>
+					</select>
+				</div>
 			</div>
 
 			<div class="estoque-table-container">
@@ -91,59 +115,26 @@
 						</tr>
 					</thead>
 					<tbody id="estoque-table-body">
-						<!-- Produtos de exemplo mockados para visualização inicial -->
-						<tr>
-							<td>#1024</td>
-							<td>Calça Jeans Reta</td>
-							<td>Calças</td>
-							<td>35</td>
-							<td>R$ 249,90</td>
-							<td><span class="status in-stock">Em Estoque</span></td>
-							<td>
-								<button class="btn-icon"><i class="fas fa-edit"></i></button>
-								<button class="btn-icon text-danger"><i class="fas fa-trash"></i></button>
-							</td>
-						</tr>
-						<tr>
-							<td>#2350</td>
-							<td>Camiseta Básica Algodão</td>
-							<td>Blusas</td>
-							<td>0</td>
-							<td>R$ 89,90</td>
-							<td><span class="status out-of-stock">Sem Estoque</span></td>
-							<td>
-								<button class="btn-icon"><i class="fas fa-edit"></i></button>
-								<button class="btn-icon text-danger"><i class="fas fa-trash"></i></button>
-							</td>
-						</tr>
-						<tr>
-							<td>#3105</td>
-							<td>Vestido Midi Canelado</td>
-							<td>Vestidos</td>
-							<td>8</td>
-							<td>R$ 189,90</td>
-							<td><span class="status low-stock">Baixo Estoque</span></td>
-							<td>
-								<button class="btn-icon"><i class="fas fa-edit"></i></button>
-								<button class="btn-icon text-danger"><i class="fas fa-trash"></i></button>
-							</td>
-						</tr>
-						<tr>
-							<td>#4011</td>
-							<td>Jaqueta Bomber Unissex</td>
-							<td>Casacos</td>
-							<td>15</td>
-							<td>R$ 320,00</td>
-							<td><span class="status in-stock">Em Estoque</span></td>
-							<td>
-								<button class="btn-icon"><i class="fas fa-edit"></i></button>
-								<button class="btn-icon text-danger"><i class="fas fa-trash"></i></button>
-							</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
 		</section>
+
+		<!-- modal de confirmacao generico usado pelo ui js -->
+		<div id="custom-modal-overlay" class="modal-overlay">
+			<div class="modal-container">
+				<div class="modal-header">
+					<h3 id="modal-title"></h3>
+				</div>
+				<div class="modal-body">
+					<p id="modal-message"></p>
+				</div>
+				<div class="modal-footer">
+					<button id="modal-cancel-btn" class="btn-modal btn-modal-secondary">Cancelar</button>
+					<button id="modal-confirm-btn" class="btn-modal btn-modal-primary">Confirmar</button>
+				</div>
+			</div>
+		</div>
 	</main>
 </div>
 <script type="module" src="../js/estoque.js"></script>

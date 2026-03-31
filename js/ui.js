@@ -1,11 +1,11 @@
 import { getUserData, logout } from './auth.js';
 
 export async function setupSharedUI(user) {
-    // 1. Exibe o conteúdo apenas após confirmar autenticação (Proteção visual)
+    // exibe o conteudo apenas apos confirmar autenticacao protecao visual
     const appContainer = document.getElementById('app-container');
     if (appContainer) appContainer.style.display = 'flex';
 
-    // 2. Busca os dados no Firestore e define referências
+    // busca os dados no firestore e define referencias
     const userData = await getUserData(user.uid);
     let displayName = user.email.split('@')[0];
     let storeName = "nomeLoja";
@@ -16,7 +16,7 @@ export async function setupSharedUI(user) {
         if (userData.cargo) sessionStorage.setItem('userRole', userData.cargo);
     }
 
-    // 3. Atualiza DOM (Nomes e E-mail)
+    // atualiza dom nomes e e mail
     const userNameEl = document.getElementById('userName');
     if (userNameEl) userNameEl.textContent = displayName;
 
@@ -29,7 +29,7 @@ export async function setupSharedUI(user) {
     const userGreetingEl = document.getElementById('userGreeting');
     if (userGreetingEl) userGreetingEl.textContent = displayName.split(' ')[0];
 
-    // 4. Lógica das Iniciais do Avatar
+    // logica das iniciais do avatar
     const nameParts = displayName.trim().split(/\s+/);
     let initials = nameParts[0][0].toUpperCase();
     if (nameParts.length > 1) {
@@ -39,7 +39,7 @@ export async function setupSharedUI(user) {
     }
     document.querySelectorAll('.user-avatar').forEach(avatar => avatar.textContent = initials);
 
-    // 5. Configuração da Sidebar e Submenus
+    // configuracao da sidebar e submenus
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
     if (sidebarToggle && sidebar) {
@@ -70,7 +70,7 @@ export async function setupSharedUI(user) {
         });
     }
 
-    // 7. Lógica de Logout global
+    // logica de logout global
     document.querySelectorAll('#logoutBtn, #dropdownLogoutBtn, .logout-link').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             e.preventDefault();
@@ -80,9 +80,9 @@ export async function setupSharedUI(user) {
     });
 }
 
-// 8. Funções de Modal reutilizáveis
+// funcoes de modal reutilizaveis
 export function showCustomConfirm(title, message) {
-    // This assumes the modal HTML is present on the page
+    // assumes que o html do modal esta presente na pagina
     const modalOverlay = document.getElementById('custom-modal-overlay');
     const modalTitle = document.getElementById('modal-title');
     const modalMessage = document.getElementById('modal-message');
@@ -91,7 +91,7 @@ export function showCustomConfirm(title, message) {
 
     if (!modalOverlay || !modalTitle || !modalMessage || !modalConfirmBtn || !modalCancelBtn) {
         console.error("Elementos do modal de confirmação não encontrados no DOM.");
-        return Promise.resolve(false); // Fails silently
+        return Promise.resolve(false); // falha silenciosamente
     }
 
     return new Promise((resolve) => {
@@ -126,7 +126,7 @@ export function showCustomConfirm(title, message) {
 }
 
 export function showCustomAlert(title, message) {
-    // This assumes the modal HTML is present on the page
+    // assumes que o html do modal esta presente na pagina
     const modalOverlay = document.getElementById('custom-modal-overlay');
     const modalTitle = document.getElementById('modal-title');
     const modalMessage = document.getElementById('modal-message');
@@ -135,22 +135,25 @@ export function showCustomAlert(title, message) {
 
     if (!modalOverlay || !modalTitle || !modalMessage || !modalConfirmBtn || !modalCancelBtn) {
         console.error("Elementos do modal de alerta não encontrados no DOM.");
-        return;
+        return Promise.resolve(); // retorna uma promessa resolvida para nao quebrar a cadeia de await
     }
 
-    modalTitle.textContent = title;
-    modalMessage.textContent = message;
+    return new Promise((resolve) => {
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
 
-    modalConfirmBtn.style.display = 'inline-block';
-    modalCancelBtn.style.display = 'none';
-    modalConfirmBtn.textContent = 'OK';
+        modalConfirmBtn.style.display = 'inline-block';
+        modalCancelBtn.style.display = 'none';
+        modalConfirmBtn.textContent = 'OK';
 
-    modalOverlay.classList.add('show');
+        modalOverlay.classList.add('show');
 
-    const okHandler = () => {
-        modalOverlay.classList.remove('show');
-        modalConfirmBtn.removeEventListener('click', okHandler);
-    };
+        const okHandler = () => {
+            modalOverlay.classList.remove('show');
+            modalConfirmBtn.removeEventListener('click', okHandler);
+            resolve(); // resolve a promessa quando o usuario clica em ok
+        };
 
-    modalConfirmBtn.addEventListener('click', okHandler);
+        modalConfirmBtn.addEventListener('click', okHandler);
+    });
 }

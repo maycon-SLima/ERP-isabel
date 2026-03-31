@@ -5,12 +5,12 @@ async function initializeDashboard() {
     const user = await checkAuth();
     if (!user) return;
 
-    // Inicializa a interface compartilhada (Menu, Topbar, Logout)
+    // inicializa a interface compartilhada menu topbar logout
     await setupSharedUI(user);
 
-    // Lógica de saudação baseada no horário atual
+    // logica de saudacao baseada no horario atual
     let currentHour = new Date().getHours();
-	currentHour = 3; // TESTE: Descomente esta linha e mude o número para testar (0 a 23)
+	currentHour = 3; // teste descomente esta linha e mude o numero para testar 0 a 23
     let greetingText = "-";
 
     if (currentHour >= 6 && currentHour < 12) {
@@ -32,7 +32,7 @@ async function initializeDashboard() {
     const greetingTimeEl = document.getElementById('greetingTime');
     if (greetingTimeEl) greetingTimeEl.textContent = greetingText;
 
-// Gráfico de Evolução do Saldo (Linha)
+// grafico de evolucao do saldo linha
 const ctxBalance = document.getElementById('balanceChart');
 if (ctxBalance) {
     new Chart(ctxBalance, {
@@ -46,7 +46,7 @@ if (ctxBalance) {
                 backgroundColor: 'rgba(79, 172, 254, 0.1)',
                 borderWidth: 3,
                 fill: true,
-                tension: 0.4 // Deixa a linha curvada
+                tension: 0.4 // deixa a linha curvada
             }]
         },
         options: {
@@ -70,7 +70,7 @@ if (ctxBalance) {
     });
 }
 
-// Gráfico de Composição das Despesas (Doughnut)
+// grafico de composicao das despesas doughnut
 const ctxExpenses = document.getElementById('expensesChart');
 if (ctxExpenses) {
     new Chart(ctxExpenses, {
@@ -93,12 +93,12 @@ if (ctxExpenses) {
                     labels: { color: '#bdbdbd', padding: 20 }
                 }
             },
-            cutout: '70%' // Deixa o buraco no meio maior
+            cutout: '70%' // deixa o buraco no meio maior
         }
     });
 }
 
-// Gráfico de Receita (Chart.js)
+// grafico de receita chart js
 const ctx = document.getElementById('revenueChart');
 if (ctx) {
     new Chart(ctx, {

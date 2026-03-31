@@ -7,24 +7,24 @@ async function initializePontoPage() {
     const user = await checkAuth();
     if (!user) return;
 
-    // Inicializa a interface padrão compartilhada
+    // inicializa a interface padrao compartilhada
     await setupSharedUI(user);
 
-    // --- Lógica específica da página de Ponto ---
+    // logica especifica da pagina de ponto
     const timeElement = document.getElementById('current-time');
     const dateElement = document.getElementById('current-date');
     const clockInOutBtn = document.getElementById('clock-in-out-btn');
     const pontoStatus = document.getElementById('ponto-status');
     const historyTableBody = document.getElementById('history-table-body');
 
-    // Elementos do cartão de resumo
+    // elementos do cartao de resumo
     const summaryEntry = document.getElementById('summary-entry');
     const summaryLunchStart = document.getElementById('summary-lunch-start');
     const summaryLunchEnd = document.getElementById('summary-lunch-end');
     const summaryExit = document.getElementById('summary-exit');
     const summaryTotalHours = document.getElementById('summary-total-hours');
 
-    // Função que atualiza o relógio
+    // funcao que atualiza o relogio
     function updateClock() {
         const now = new Date();
         const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -40,69 +40,69 @@ async function initializePontoPage() {
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Onde vamos guardar as batidas de ponto.
-    // Agora, vamos carregar do Firestore e depois adicionar novas.
+    // onde vamos guardar as batidas de ponto
+    // agora vamos carregar do firestore e depois adicionar novas
     let pontoRecords = [];
 
-    // Função para carregar os pontos do dia do Firestore
+    // funcao para carregar os pontos do dia do firestore
     async function loadPontoRecords() {
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Início do dia atual
+        today.setHours(0, 0, 0, 0); // inicio do dia atual
         const tomorrow = new Date(today);
-        tomorrow.setDate(today.getDate() + 1); // Início do próximo dia
+        tomorrow.setDate(today.getDate() + 1); // inicio do proximo dia
 
         const q = query(
             collection(db, "punchRecords"),
             where("userId", "==", user.uid),
             where("timestamp", ">=", today),
             where("timestamp", "<", tomorrow),
-            orderBy("timestamp", "asc") // Garante a ordem correta
+            orderBy("timestamp", "asc") // garante a ordem correta
         );
         const querySnapshot = await getDocs(q);
         pontoRecords = querySnapshot.docs.map(doc => {
             const data = doc.data();
-            return { type: data.type, time: data.timestamp.toDate(), source: data.source }; // Converte Timestamp para Date
+            return { type: data.type, time: data.timestamp.toDate(), source: data.source }; // converte timestamp para date
         });
     }
 
-    // --- A Mágica do Ponto Acontece Aqui ---
+    // a magica do ponto acontece aqui
 
     if (clockInOutBtn) {
         clockInOutBtn.addEventListener('click', handleClockIn);
     }
 
     async function handleClockIn() {
-        // Desabilita o botão imediatamente para evitar cliques duplos
+        // desabilita o botao imediatamente para evitar cliques duplos
         clockInOutBtn.disabled = true;
 
         const punchTypes = ['Entrada', 'Saída Almoço', 'Volta Almoço', 'Saída'];
         const currentPunchIndex = pontoRecords.length;
 
         if (currentPunchIndex >= punchTypes.length) {
-            clockInOutBtn.disabled = false; // Reabilita se não houver ação
-            return; // Se já fez as 4 batidas, não faz mais nada
+            clockInOutBtn.disabled = false; // reabilita se nao houver acao
+            return; // se ja fez as 4 batidas nao faz mais nada
         }
 
         const punchType = punchTypes[currentPunchIndex];
 
-        // 1. Usa o pop-up customizado para confirmação
+        // usa o pop up customizado para confirmacao
         const isConfirmed = await showCustomConfirm('Confirmação de Ponto', `Você confirma o registro de "${punchType}"?`);
 
         if (!isConfirmed) {
-            clockInOutBtn.disabled = false; // Reabilita se o usuário cancelar
-            return; // Se o usuário clicar em "Cancelar", a função para aqui.
+            clockInOutBtn.disabled = false; // reabilita se o usuario cancelar
+            return; // se o usuario clicar em cancelar a funcao para aqui
         }
 
         const now = new Date();
 
-        // 2. Tratativa para não permitir marcações em um intervalo menor que 5 minutos
+        // tratativa para nao permitir marcacoes em um intervalo menor que 5 minutos
         if (pontoRecords.length > 0) {
             const lastRecord = pontoRecords[pontoRecords.length - 1];
             const fiveMinutesInMillis = 5 * 60 * 1000;
             if ((now.getTime() - lastRecord.time.getTime()) < fiveMinutesInMillis) {
                 showCustomAlert('Intervalo Mínimo', 'Você deve aguardar pelo menos 5 minutos entre cada marcação.');
-                clockInOutBtn.disabled = false; // Reabilita após o erro
-                return; // Impede o registro do ponto.
+                clockInOutBtn.disabled = false; // reabilita apos o erro
+                return; // impede o registro do ponto
             }
         }
         const newRecord = {
@@ -111,7 +111,7 @@ async function initializePontoPage() {
             source: 'Web'
         };
 
-        await addDoc(collection(db, "punchRecords"), { ...newRecord, userId: user.uid, timestamp: now }); // Salva no Firestore
+        await addDoc(collection(db, "punchRecords"), { ...newRecord, userId: user.uid, timestamp: now }); // salva no firestore
         pontoRecords.push(newRecord);
         updateUI();
     }
@@ -129,7 +129,7 @@ async function initializePontoPage() {
     }
 
     function updateHistory() {
-        historyTableBody.innerHTML = ''; // Limpa o histórico antigo pra poder atualizar
+        historyTableBody.innerHTML = ''; // limpa o historico antigo pra poder atualizar
 
         if (pontoRecords.length === 0) {
             historyTableBody.innerHTML = `<tr><td colspan="3" style="text-align: center;">Nenhuma marcação encontrada para hoje.</td></tr>`;
@@ -157,7 +157,7 @@ async function initializePontoPage() {
     function updateButtonAndStatus() {
         const punchCount = pontoRecords.length;
 
-        // Reseta o estado do botão para os casos normais
+        // reseta o estado do botao para os casos normais
         clockInOutBtn.disabled = false;
         clockInOutBtn.style.cursor = 'pointer';
         clockInOutBtn.style.backgroundColor = '';
@@ -211,10 +211,10 @@ async function initializePontoPage() {
         summaryTotalHours.textContent = `${hours}h ${minutes.toString().padStart(2, '0')}m`;
     }
 
-    // Arruma a tela pela primeira vez quando a página carrega
-    await loadPontoRecords(); // Carrega os pontos antes de atualizar a UI
+    // arruma a tela pela primeira vez quando a pagina carrega
+    await loadPontoRecords(); // carrega os pontos antes de atualizar a ui
     updateUI(); 
 }
 
-// Chama a função principal pra começar tudo quando a página carregar
+// chama a funcao principal pra comecar tudo quando a pagina carregar
 document.addEventListener('DOMContentLoaded', initializePontoPage);

@@ -1,11 +1,11 @@
-/* DASHBOARD LAYOUT */
+/* dashboard layout */
 .dashboard-container {
     display: flex;
     min-height: 100vh;
     background: #232323;
 }
 
-/* SIDEBAR */
+/* sidebar */
 .sidebar {
     width: 240px;
     flex-shrink: 0;
@@ -50,7 +50,7 @@
 .sidebar-toggle-btn i {
     transition: transform 0.3s ease;
 }
-/* Gira o ícone em 180 graus quando a sidebar estiver aberta */
+/* gira o icone em 180 graus quando a sidebar estiver aberta */
 .sidebar:not(.sidebar-collapsed) .sidebar-toggle-btn i {
     transform: rotate(180deg);
 }
@@ -107,7 +107,7 @@
     color: #58af9b;
 }
 
-/* MAIN CONTENT */
+/* main content */
 .main-content {
     flex: 1;
     background: #232323;
@@ -118,7 +118,7 @@
     min-width: 0;
 }
 
-/* TOPBAR */
+/* topbar */
 .topbar {
     display: flex;
     justify-content: space-between;
@@ -202,7 +202,7 @@
     transform: rotate(180deg);
 }
 
-/* USER DROPDOWN */
+/* user dropdown */
 .user-dropdown {
     position: absolute;
     top: calc(100% + 10px);
@@ -252,7 +252,7 @@
     color: #ff4c4c;
 }
 
-/* DASHBOARD CONTENT */
+/* dashboard content */
 .dashboard-content {
     padding: 0 36px 36px 36px;
     flex: 1;
@@ -299,7 +299,7 @@
     color: #fff;
 }
 
-/* CARDS */
+/* cards */
 .dashboard-cards {
     display: flex;
     gap: 18px;
@@ -339,7 +339,7 @@
     color: #f7b731;
 }
 
-/* GRÁFICOS E SEGMENTAÇÃO */
+/* graficos e segmentacao */
 .dashboard-graphs {
     display: flex;
     gap: 18px;
@@ -725,7 +725,7 @@ input:-webkit-autofill
     padding: 0 5px;
 }
 
-/* second content*/
+/* second content */
 
 .second-content {
     position: absolute;
@@ -768,13 +768,13 @@ input:-webkit-autofill
     border-bottom-left-radius: 0;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    animation: slidein 1.3s; /*MODIFIQUEI DE 3s PARA 1.3s*/
+    animation: slidein 1.3s; /* modifiquei de 3s para 1 3s */
 
     z-index: 12;
 }
 
 .sign-up-js .content::before {
-    animation: slideout 1.3s; /*MODIFIQUEI DE 3s PARA 1.3s*/
+    animation: slideout 1.3s; /* modifiquei de 3s para 1 3s */
 
     z-index: 12;
 }
@@ -793,21 +793,21 @@ input:-webkit-autofill
 }
 
 
-/* DESLOCAMENTO CONTEÚDO ATRÁS DO CONTENT:BEFORE*/
+/* deslocamento conteudo atras do content before */
 .sign-in-js .first-content .second-column {
 
     z-index: -1;
     position: relative;
-    animation: deslocamentoEsq 1.3s; /*MODIFIQUEI DE 3s PARA 1.3s*/
+    animation: deslocamentoEsq 1.3s; /* modifiquei de 3s para 1 3s */
 }
 
 .sign-up-js .second-content .second-column {
     position: relative;
     z-index: -1;
-    animation: deslocamentoDir 1.3s; /*MODIFIQUEI DE 3s PARA 1.3s*/
+    animation: deslocamentoDir 1.3s; /* modifiquei de 3s para 1 3s */
 }
 
-/*ANIMAÇÃOO CSS PARA O CONTEÚDO*/
+/* animacao css para o conteudo */
 
 @keyframes deslocamentoEsq {
 
@@ -857,7 +857,7 @@ input:-webkit-autofill
 }
 
 
-/*ANIMAÇÃO CSS*/
+/* animacao css */
 
 @keyframes slidein {
 
@@ -915,7 +915,7 @@ input:-webkit-autofill
     }
 }
 
-/* PONTO PAGE STYLES */
+/* ponto page styles */
 .ponto-content {
     padding: 0 36px 36px 36px;
     flex: 1;
@@ -971,7 +971,7 @@ input:-webkit-autofill
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    flex: 1; /* Permite que os cards cresçam */
+    flex: 1; /* permite que os cards crescam */
 }
 
 .ponto-clock-card {
@@ -1081,7 +1081,7 @@ input:-webkit-autofill
     border-bottom: none;
 }
 
-/* CUSTOM MODAL STYLES */
+/* custom modal styles */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1171,7 +1171,7 @@ input:-webkit-autofill
 }
 .btn-modal-secondary:hover { background: #4f4f4f; }
 
-/* MODAL FORM STYLES */
+/* modal form styles */
 .modal-form {
     display: flex;
     flex-direction: column;
@@ -1214,20 +1214,26 @@ input:-webkit-autofill
     border-color: #58af9b;
 }
 
-/* Remove a seta padrão do number input no Chrome/Safari/Edge */
+.form-input[readonly] {
+    background-color: #2a2a2a;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* remove a seta padrao do number input no chrome safari edge */
 .form-input::-webkit-outer-spin-button,
 .form-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Remove a seta padrão do number input no Firefox */
+/* remove a seta padrao do number input no firefox */
 .form-input[type=number] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
 
-/* CADASTRO ITEM PAGE STYLES */
+/* cadastro item page styles */
 .cadastro-content {
     padding: 0 36px 36px 36px;
     flex: 1;
@@ -1294,7 +1300,7 @@ input:-webkit-autofill
 .btn-form-action.btn-secondary { background: #3a3a3a; color: #fff; }
 .btn-form-action.btn-secondary:hover { background: #4f4f4f; }
 
-/* ESTOQUE PAGE STYLES */
+/* estoque page styles */
 .estoque-content {
     padding: 0 36px 36px 36px;
     flex: 1;
@@ -1398,6 +1404,19 @@ input:-webkit-autofill
     color: #fff;
 }
 
+.advanced-filters {
+    background: #181818;
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    margin-top: -8px;
+    border: 1px solid #333;
+}
+.advanced-filters .form-group {
+    max-width: 300px;
+}
+
 .estoque-table-container {
     background: #181818;
     border-radius: 12px;
@@ -1474,13 +1493,11 @@ input:-webkit-autofill
     color: #ff6b6b;
 }
 
-/* =================================== */
-/*           RESPONSIVIDADE            */
-/* =================================== */
+/* responsividade */
 
-/* Telas de tablet e desktops menores */
+/* telas de tablet e desktops menores */
 @media (max-width: 992px) {
-    /* --- PÁGINA DE LOGIN --- */
+    /* pagina de login */
     .content {
         width: 90%;
         height: auto;
@@ -1488,7 +1505,7 @@ input:-webkit-autofill
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
     .content::before {
-        display: none; /* Esconde o fundo colorido animado */
+        display: none; /* esconde o fundo colorido animado */
     }
     .first-content, .second-content {
         flex-direction: column;
@@ -1498,10 +1515,10 @@ input:-webkit-autofill
         width: 100%;
         text-align: center;
         align-items: center;
-        z-index: 1 !important; /* Reseta z-index das animações */
+        z-index: 1 !important; /* reseta z index das animacoes */
     }
     .logo-area {
-        transform: none; /* Remove o deslocamento do logo */
+        transform: none; /* remove o deslocamento do logo */
         width: 200px;
         height: 200px;
         margin-bottom: 0;
@@ -1514,11 +1531,11 @@ input:-webkit-autofill
     }
     .sign-in-js .first-content .second-column,
     .sign-up-js .second-content .second-column {
-        animation: none; /* Desliga animações de deslocamento */
+        animation: none; /* desliga animacoes de deslocamento */
     }
 
 
-    /* --- LAYOUT PRINCIPAL (DASHBOARD, PONTO, ETC) --- */
+    /* layout principal dashboard ponto etc */
     .topbar {
         padding: 18px 24px 0 24px;
     }
@@ -1532,9 +1549,9 @@ input:-webkit-autofill
     }
 }
 
-/* Telas de celulares */
+/* telas de celulares */
 @media (max-width: 576px) {
-    /* --- LAYOUT PRINCIPAL (DASHBOARD, PONTO, ETC) --- */
+    /* layout principal dashboard ponto etc */
     .topbar {
         flex-direction: column;
         align-items: flex-start;
@@ -1551,5 +1568,8 @@ input:-webkit-autofill
     .estoque-filters {
         flex-direction: column;
         align-items: stretch;
+    }
+    .advanced-filters {
+        flex-direction: column;
     }
 }
