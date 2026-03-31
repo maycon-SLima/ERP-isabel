@@ -963,6 +963,7 @@ input:-webkit-autofill
 .ponto-main {
     display: flex;
     gap: 24px;
+    flex-wrap: wrap;
 }
 
 .ponto-clock-card, .ponto-summary-card, .ponto-history-card {
@@ -970,6 +971,7 @@ input:-webkit-autofill
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    flex: 1; /* Permite que os cards cresçam */
 }
 
 .ponto-clock-card {
@@ -979,6 +981,7 @@ input:-webkit-autofill
     align-items: center;
     justify-content: center;
     gap: 16px;
+    min-width: 300px;
 }
 
 .ponto-clock-card h3, .ponto-summary-card h3, .ponto-history-card h3 {
@@ -1028,6 +1031,7 @@ input:-webkit-autofill
 
 .ponto-summary-card {
     flex: 1.2;
+    min-width: 300px;
 }
 
 .summary-item, .summary-total {
@@ -1156,3 +1160,79 @@ input:-webkit-autofill
     color: #fff;
 }
 .btn-modal-secondary:hover { background: #4f4f4f; }
+
+/* =================================== */
+/*           RESPONSIVIDADE            */
+/* =================================== */
+
+/* Telas de tablet e desktops menores */
+@media (max-width: 992px) {
+    /* --- PÁGINA DE LOGIN --- */
+    .content {
+        width: 90%;
+        height: auto;
+        margin: 24px 0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .content::before {
+        display: none; /* Esconde o fundo colorido animado */
+    }
+    .first-content, .second-content {
+        flex-direction: column;
+        position: static;
+    }
+    .first-column, .second-column {
+        width: 100%;
+        text-align: center;
+        align-items: center;
+        z-index: 1 !important; /* Reseta z-index das animações */
+    }
+    .logo-area {
+        transform: none; /* Remove o deslocamento do logo */
+        width: 200px;
+        height: 200px;
+        margin-bottom: 0;
+        background: none;
+        box-shadow: none;
+    }
+    .login-box-simple {
+        margin: 24px 0;
+        padding: 0 15px;
+    }
+    .sign-in-js .first-content .second-column,
+    .sign-up-js .second-content .second-column {
+        animation: none; /* Desliga animações de deslocamento */
+    }
+
+
+    /* --- LAYOUT PRINCIPAL (DASHBOARD, PONTO, ETC) --- */
+    .topbar {
+        padding: 18px 24px 0 24px;
+    }
+    .dashboard-content, .ponto-content {
+        padding: 0 24px 24px 24px;
+    }
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+}
+
+/* Telas de celulares */
+@media (max-width: 576px) {
+    /* --- LAYOUT PRINCIPAL (DASHBOARD, PONTO, ETC) --- */
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 18px 18px 0 18px;
+    }
+    .topbar-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    .dashboard-content, .ponto-content {
+        padding: 0 18px 18px 18px;
+    }
+}
