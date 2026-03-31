@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cadastrar Produto</title>
+	<link rel="stylesheet" href="../css/styles.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="dashboard-container">
+	<!-- Sidebar -->
+	<aside class="sidebar sidebar-collapsed" id="sidebar">
+		<div class="sidebar-logo">
+			<button id="sidebarToggle" class="sidebar-toggle-btn"><i class="fas fa-angles-right"></i></button>
+			<span class="sidebar-store-name">nomeLoja</span>
+		</div>
+		<nav class="sidebar-nav">
+			<ul>
+				<li><a href="dashboard.html"><i class="fas fa-home"></i><span class="nav-text">Início</span></a></li>
+				<li><a href="ponto.html"><i class="fas fa-clock"></i><span class="nav-text">Marcação de Ponto</span></a></li>
+                <li><a href="estoque.html" class="active"><i class="fas fa-box"></i><span class="nav-text">Estoque</span></a></li>
+                <li><a href="fornecedores.html"><i class="fas fa-truck"></i><span class="nav-text">Fornecedores</span></a></li>
+                <li><a href="vendas.html"><i class="fas fa-cart-shopping"></i><span class="nav-text">Vendas</span></a></li>
+				<li><a href="relatorios.html"><i class="fas fa-chart-bar"></i><span class="nav-text">Relatórios</span></a></li>
+				<li><a href="configuracoes.html"><i class="fas fa-cog"></i><span class="nav-text">Configurações</span></a></li>
+			</ul>
+		</nav>
+	</aside>
+
+	<!-- Main Content -->
+	<main class="main-content">
+		<!-- Topbar -->
+		<header class="topbar">
+			<div style="display: flex; align-items: center; gap: 16px;">
+				<div class="breadcrumb">Estoque - Cadastro de Produto</div>
+			</div>
+			<div class="topbar-actions">
+				<div class="user-info" id="userInfoToggle">
+					<span class="user-avatar">...</span>
+					<div class="user-details">
+						<span class="user-name" id="userName">Carregando...</span>
+						<span class="user-email" id="userEmail">carregando...</span>
+					</div>
+					<i class="fas fa-chevron-down"></i>
+					<div class="user-dropdown" id="userDropdown">
+						<ul>
+							<li><a href="#"><i class="fas fa-user"></i> Perfil</a></li>
+							<li><a href="#" id="dropdownLogoutBtn" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Cadastro Content -->
+		<section class="cadastro-content">
+			<div class="form-page-header">
+				<h2>Adicionar Novo Produto</h2>
+				<p>Preencha os dados abaixo para registrar um novo item no sistema.</p>
+			</div>
+			<div class="form-page-container">
+				<form id="form-novo-produto" class="page-form">
+					<div class="form-group">
+						<label for="produto-nome" class="form-label">Nome do Produto</label>
+						<input type="text" id="produto-nome" class="form-input" required placeholder="Ex: Camiseta Básica Algodão">
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<label for="produto-sku" class="form-label">Código (SKU)</label>
+							<input type="text" id="produto-sku" class="form-input" required placeholder="Ex: #2351">
+						</div>
+						<div class="form-group">
+							<label for="produto-categoria" class="form-label">Categoria</label>
+							<select id="produto-categoria" class="form-input" required>
+								<option value="" disabled selected>Selecione...</option>
+								<option value="Calças">Calças</option>
+								<option value="Blusas">Blusas</option>
+								<option value="Vestidos">Vestidos</option>
+								<option value="Casacos">Casacos</option>
+								<option value="Acessórios">Acessórios</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<label for="produto-qtd" class="form-label">Quantidade</label>
+							<input type="number" id="produto-qtd" class="form-input" required min="0" placeholder="0">
+						</div>
+						<div class="form-group">
+							<label for="produto-preco" class="form-label">Preço (R$)</label>
+							<input type="number" id="produto-preco" class="form-input" required min="0" step="0.01" placeholder="89.90">
+						</div>
+					</div>
+				</form>
+				<div class="form-page-footer">
+					<a href="estoque.html" class="btn-form-action btn-secondary">Cancelar</a>
+					<button class="btn-form-action btn-primary" form="form-novo-produto" type="submit">Salvar Produto</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- Modal de Confirmação Genérico (usado pelo ui.js) -->
+		<div id="custom-modal-overlay" class="modal-overlay"></div>
+	</main>
+</div>
+<script type="module" src="../js/cadastro-item.js"></script>
+</body>
+</html>

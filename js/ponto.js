@@ -1,6 +1,6 @@
 import { checkAuth } from './protected.js';
 import { db } from './auth.js';
-import { setupSharedUI } from './ui.js';
+import { setupSharedUI, showCustomConfirm, showCustomAlert } from './ui.js';
 import { collection, addDoc, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 async function initializePontoPage() {
@@ -23,14 +23,6 @@ async function initializePontoPage() {
     const summaryLunchEnd = document.getElementById('summary-lunch-end');
     const summaryExit = document.getElementById('summary-exit');
     const summaryTotalHours = document.getElementById('summary-total-hours');
-
-    // Elementos do Modal Customizado
-    const modalOverlay = document.getElementById('custom-modal-overlay');
-    const modalTitle = document.getElementById('modal-title');
-    const modalMessage = document.getElementById('modal-message');
-    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
-    const modalCancelBtn = document.getElementById('modal-cancel-btn');
-
 
     // Função que atualiza o relógio
     function updateClock() {
@@ -77,58 +69,6 @@ async function initializePontoPage() {
 
     if (clockInOutBtn) {
         clockInOutBtn.addEventListener('click', handleClockIn);
-    }
-
-    // Função para mostrar um pop-up de confirmação
-    function showCustomConfirm(title, message) {
-        return new Promise((resolve) => {
-            modalTitle.textContent = title;
-            modalMessage.textContent = message;
-
-            modalConfirmBtn.style.display = 'inline-block';
-            modalCancelBtn.style.display = 'inline-block';
-            modalConfirmBtn.textContent = 'Confirmar';
-
-            modalOverlay.classList.add('show');
-
-            const confirmHandler = () => {
-                cleanup();
-                resolve(true);
-            };
-
-            const cancelHandler = () => {
-                cleanup();
-                resolve(false);
-            };
-
-            const cleanup = () => {
-                modalOverlay.classList.remove('show');
-                modalConfirmBtn.removeEventListener('click', confirmHandler);
-                modalCancelBtn.removeEventListener('click', cancelHandler);
-            };
-
-            modalConfirmBtn.addEventListener('click', confirmHandler);
-            modalCancelBtn.addEventListener('click', cancelHandler);
-        });
-    }
-
-    // Função para mostrar um pop-up de alerta simples
-    function showCustomAlert(title, message) {
-        modalTitle.textContent = title;
-        modalMessage.textContent = message;
-
-        modalConfirmBtn.style.display = 'inline-block';
-        modalCancelBtn.style.display = 'none';
-        modalConfirmBtn.textContent = 'OK';
-
-        modalOverlay.classList.add('show');
-
-        const okHandler = () => {
-            modalOverlay.classList.remove('show');
-            modalConfirmBtn.removeEventListener('click', okHandler);
-        };
-
-        modalConfirmBtn.addEventListener('click', okHandler);
     }
 
     async function handleClockIn() {

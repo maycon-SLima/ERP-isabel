@@ -79,3 +79,78 @@ export async function setupSharedUI(user) {
         });
     });
 }
+
+// 8. Funções de Modal reutilizáveis
+export function showCustomConfirm(title, message) {
+    // This assumes the modal HTML is present on the page
+    const modalOverlay = document.getElementById('custom-modal-overlay');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMessage = document.getElementById('modal-message');
+    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+    const modalCancelBtn = document.getElementById('modal-cancel-btn');
+
+    if (!modalOverlay || !modalTitle || !modalMessage || !modalConfirmBtn || !modalCancelBtn) {
+        console.error("Elementos do modal de confirmação não encontrados no DOM.");
+        return Promise.resolve(false); // Fails silently
+    }
+
+    return new Promise((resolve) => {
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+
+        modalConfirmBtn.style.display = 'inline-block';
+        modalCancelBtn.style.display = 'inline-block';
+        modalConfirmBtn.textContent = 'Confirmar';
+
+        modalOverlay.classList.add('show');
+
+        const confirmHandler = () => {
+            cleanup();
+            resolve(true);
+        };
+
+        const cancelHandler = () => {
+            cleanup();
+            resolve(false);
+        };
+
+        const cleanup = () => {
+            modalOverlay.classList.remove('show');
+            modalConfirmBtn.removeEventListener('click', confirmHandler);
+            modalCancelBtn.removeEventListener('click', cancelHandler);
+        };
+
+        modalConfirmBtn.addEventListener('click', confirmHandler);
+        modalCancelBtn.addEventListener('click', cancelHandler);
+    });
+}
+
+export function showCustomAlert(title, message) {
+    // This assumes the modal HTML is present on the page
+    const modalOverlay = document.getElementById('custom-modal-overlay');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMessage = document.getElementById('modal-message');
+    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+    const modalCancelBtn = document.getElementById('modal-cancel-btn');
+
+    if (!modalOverlay || !modalTitle || !modalMessage || !modalConfirmBtn || !modalCancelBtn) {
+        console.error("Elementos do modal de alerta não encontrados no DOM.");
+        return;
+    }
+
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+
+    modalConfirmBtn.style.display = 'inline-block';
+    modalCancelBtn.style.display = 'none';
+    modalConfirmBtn.textContent = 'OK';
+
+    modalOverlay.classList.add('show');
+
+    const okHandler = () => {
+        modalOverlay.classList.remove('show');
+        modalConfirmBtn.removeEventListener('click', okHandler);
+    };
+
+    modalConfirmBtn.addEventListener('click', okHandler);
+}

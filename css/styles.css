@@ -1125,6 +1125,16 @@ input:-webkit-autofill
     margin: 0 0 12px 0;
 }
 
+.modal-close {
+    font-size: 1.8rem;
+    line-height: 1;
+    padding: 0 4px;
+}
+
+.modal-container.large {
+    max-width: 600px;
+}
+
 .modal-body p {
     color: #bdbdbd;
     font-size: 1rem;
@@ -1160,6 +1170,309 @@ input:-webkit-autofill
     color: #fff;
 }
 .btn-modal-secondary:hover { background: #4f4f4f; }
+
+/* MODAL FORM STYLES */
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-label {
+    color: #bdbdbd;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #181818;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: #58af9b;
+}
+
+/* Remove a seta padrão do number input no Chrome/Safari/Edge */
+.form-input::-webkit-outer-spin-button,
+.form-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove a seta padrão do number input no Firefox */
+.form-input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* CADASTRO ITEM PAGE STYLES */
+.cadastro-content {
+    padding: 0 36px 36px 36px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-page-header {
+    margin-top: 18px;
+}
+
+.form-page-header h2 {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.form-page-header p {
+    color: #bdbdbd;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.form-page-container {
+    background: #181818;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    max-width: 800px;
+}
+
+.page-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-page-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #232323;
+}
+
+.btn-form-action {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-form-action.btn-primary { background: #58af9b; color: #fff; }
+.btn-form-action.btn-primary:hover { background: #4a9b88; }
+.btn-form-action.btn-secondary { background: #3a3a3a; color: #fff; }
+.btn-form-action.btn-secondary:hover { background: #4f4f4f; }
+
+/* ESTOQUE PAGE STYLES */
+.estoque-content {
+    padding: 0 36px 36px 36px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.estoque-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.estoque-title h2 {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.estoque-title p {
+    color: #bdbdbd;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.btn-estoque-action {
+    background: #58af9b;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-estoque-action:hover {
+    background: #4a9b88;
+}
+
+.estoque-filters {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #181818;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+    box-sizing: border-box;
+}
+
+.search-box input:focus {
+    border-color: #58af9b;
+}
+
+.btn-filter {
+    background: #181818;
+    color: #bdbdbd;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-filter:hover {
+    background: #333;
+    color: #fff;
+}
+
+.estoque-table-container {
+    background: #181818;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    overflow-x: auto;
+}
+
+.estoque-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #bdbdbd;
+    min-width: 700px;
+}
+
+.estoque-table th, .estoque-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #232323;
+}
+
+.estoque-table th {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600;
+}
+
+.estoque-table tbody tr:hover {
+    background: #232323;
+}
+
+.estoque-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status.in-stock {
+    background: rgba(88, 175, 155, 0.2);
+    color: #58af9b;
+}
+
+.status.out-of-stock {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+}
+
+.status.low-stock {
+    background: rgba(247, 183, 49, 0.2);
+    color: #f7b731;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #bdbdbd;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 4px 8px;
+    transition: color 0.2s;
+}
+
+.btn-icon:hover {
+    color: #fff;
+}
+
+.text-danger:hover {
+    color: #ff6b6b;
+}
 
 /* =================================== */
 /*           RESPONSIVIDADE            */
@@ -1209,10 +1522,10 @@ input:-webkit-autofill
     .topbar {
         padding: 18px 24px 0 24px;
     }
-    .dashboard-content, .ponto-content {
+    .dashboard-content, .ponto-content, .estoque-content, .cadastro-content {
         padding: 0 24px 24px 24px;
     }
-    .dashboard-header {
+    .dashboard-header, .ponto-header, .estoque-header, .form-page-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
@@ -1232,7 +1545,11 @@ input:-webkit-autofill
         width: 100%;
         justify-content: flex-end;
     }
-    .dashboard-content, .ponto-content {
+    .dashboard-content, .ponto-content, .estoque-content, .cadastro-content {
         padding: 0 18px 18px 18px;
+    }
+    .estoque-filters {
+        flex-direction: column;
+        align-items: stretch;
     }
 }
