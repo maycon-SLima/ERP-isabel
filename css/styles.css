@@ -303,6 +303,7 @@
 .dashboard-cards {
     display: flex;
     gap: 18px;
+    flex-wrap: wrap;
     margin-top: 8px;
 }
 .card {
@@ -342,6 +343,7 @@
 .dashboard-graphs {
     display: flex;
     gap: 18px;
+    flex-wrap: wrap;
     margin-top: 8px;
 }
 .graph-card {
