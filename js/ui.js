@@ -42,8 +42,35 @@ export async function setupSharedUI(user) {
     // configuracao da sidebar e submenus
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
+    
+    // recupera o estado da sidebar do localstorage
+    if (sidebar) {
+        // desativa a animacao temporariamente para nao piscar
+        sidebar.style.transition = 'none';
+        
+        const savedState = localStorage.getItem('sidebarState');
+        if (savedState === 'open') {
+            sidebar.classList.remove('sidebar-collapsed');
+        } else if (savedState === 'collapsed') {
+            sidebar.classList.add('sidebar-collapsed');
+        }
+        
+        // forca o navegador a registrar a mudanca sem animar e devolve a animacao
+        void sidebar.offsetHeight;
+        sidebar.style.transition = '';
+    }
+
     if (sidebarToggle && sidebar) {
-        sidebarToggle.addEventListener('click', () => sidebar.classList.toggle('sidebar-collapsed'));
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-collapsed');
+            
+            // salva o estado atual no localstorage
+            if (sidebar.classList.contains('sidebar-collapsed')) {
+                localStorage.setItem('sidebarState', 'collapsed');
+            } else {
+                localStorage.setItem('sidebarState', 'open');
+            }
+        });
     }
 
     document.querySelectorAll('.has-submenu > a').forEach(link => {

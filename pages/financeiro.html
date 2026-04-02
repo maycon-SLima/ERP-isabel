@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Financeiro</title>
+	<link rel="stylesheet" href="../css/styles.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="dashboard-container">
+	<!-- sidebar -->
+	<aside class="sidebar sidebar-collapsed" id="sidebar">
+		<script>
+			if (localStorage.getItem('sidebarState') === 'open') {
+				document.getElementById('sidebar').classList.remove('sidebar-collapsed');
+			}
+		</script>
+		<div class="sidebar-logo">
+			<button id="sidebarToggle" class="sidebar-toggle-btn"><i class="fas fa-angles-right"></i></button>
+			<span class="sidebar-store-name">nomeLoja</span>
+		</div>
+		<nav class="sidebar-nav">
+			<ul>
+				<li><a href="dashboard.html"><i class="fas fa-home"></i><span class="nav-text">Início</span></a></li>
+				<li><a href="ponto.html"><i class="fas fa-clock"></i><span class="nav-text">Marcação de Ponto</span></a></li>
+                <li><a href="estoque.html"><i class="fas fa-box"></i><span class="nav-text">Estoque</span></a></li>
+                <li><a href="fornecedores.html"><i class="fas fa-truck"></i><span class="nav-text">Fornecedores</span></a></li>
+                <li><a href="vendas.html"><i class="fas fa-cart-shopping"></i><span class="nav-text">Vendas</span></a></li>
+				<li><a href="financeiro.html" class="active"><i class="fas fa-file-invoice-dollar"></i><span class="nav-text">Financeiro</span></a></li>
+				<li><a href="configuracoes.html"><i class="fas fa-cog"></i><span class="nav-text">Configurações</span></a></li>
+			</ul>
+		</nav>
+	</aside>
+
+	<!-- main content -->
+	<main class="main-content">
+		<!-- topbar -->
+		<header class="topbar">
+			<div style="display: flex; align-items: center; gap: 16px;">
+				<div class="breadcrumb">Financeiro - Gestão e Relatórios</div>
+			</div>
+			<div class="topbar-actions">
+				<div class="user-info" id="userInfoToggle">
+					<span class="user-avatar">...</span>
+					<div class="user-details">
+						<span class="user-name" id="userName">Carregando...</span>
+						<span class="user-email" id="userEmail">carregando...</span>
+					</div>
+					<i class="fas fa-chevron-down"></i>
+					<!-- user dropdown menu -->
+					<div class="user-dropdown" id="userDropdown">
+						<ul>
+							<li><a href="#"><i class="fas fa-user"></i> Perfil</a></li>
+							<li><a href="#" id="dropdownLogoutBtn" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- financeiro content -->
+		<section class="financeiro-content">
+			<div class="financeiro-header">
+				<div class="financeiro-title">
+					<h2>Módulo Financeiro e RH</h2>
+					<p>Controle de caixa, folha de pagamento e relatórios de fornecedores.</p>
+				</div>
+				<button class="btn-estoque-action"><i class="fas fa-plus"></i> Novo Lançamento</button>
+			</div>
+
+			<!-- modulos de acao rapida -->
+			<div class="financeiro-actions-grid">
+				<div class="action-card">
+					<i class="fas fa-users action-card-icon"></i>
+					<h3>Folha de Pagamento</h3>
+					<p>Calcule os salários baseados nas horas trabalhadas do módulo de Ponto.</p>
+					<button class="btn-form-action btn-secondary" style="margin-top: auto;">Rodar Folha</button>
+				</div>
+				
+				<div class="action-card">
+					<i class="fas fa-truck-loading action-card-icon"></i>
+					<h3>Relatórios de Fornecedores</h3>
+					<p>Veja os pagamentos pendentes e histórico de compras com seus fornecedores.</p>
+					<button class="btn-form-action btn-secondary" style="margin-top: auto;">Gerar Relatório</button>
+				</div>
+
+				<div class="action-card">
+					<i class="fas fa-chart-pie action-card-icon"></i>
+					<h3>DRE / Resultado</h3>
+					<p>Acompanhe o balanço exato entre receitas de vendas e despesas da loja.</p>
+					<button class="btn-form-action btn-secondary" style="margin-top: auto;">Ver Balanço</button>
+				</div>
+			</div>
+
+			<!-- tabela de fluxo de caixa -->
+			<h3 style="color: #fff; font-size: 1.1rem; margin-top: 12px;">Últimos Lançamentos (Fluxo de Caixa)</h3>
+			<div class="estoque-table-container">
+				<table class="estoque-table">
+					<thead>
+						<tr>
+							<th>Data</th>
+							<th>Descrição</th>
+							<th>Categoria</th>
+							<th>Tipo</th>
+							<th>Valor</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody id="financeiro-table-body">
+						<!-- mock temporario -->
+						<tr>
+							<td>15/03/2026</td>
+							<td>Venda Balcão #1020</td>
+							<td>Receita - Vendas</td>
+							<td><span class="status in-stock">Entrada</span></td>
+							<td style="color: #58af9b; font-weight: bold;">R$ 150,00</td>
+							<td>Pago</td>
+						</tr>
+						<tr>
+							<td>12/03/2026</td>
+							<td>Pagamento Fornecedor Têxtil</td>
+							<td>Despesa - Fornecedores</td>
+							<td><span class="status out-of-stock">Saída</span></td>
+							<td style="color: #ff6b6b; font-weight: bold;">-R$ 800,00</td>
+							<td>Pago</td>
+						</tr>
+						<tr>
+							<td>05/03/2026</td>
+							<td>Adiantamento Salário</td>
+							<td>Despesa - Folha</td>
+							<td><span class="status out-of-stock">Saída</span></td>
+							<td style="color: #ff6b6b; font-weight: bold;">-R$ 1.500,00</td>
+							<td>Pendente</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+</div>
+<script type="module" src="../js/financeiro.js"></script>
+</body>
+</html>
